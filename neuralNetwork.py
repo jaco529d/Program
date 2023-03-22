@@ -13,8 +13,8 @@ class neuralNetwork:
         self.learningRate = learningRate
 
         #weights
-        self.w_input_hidden = numpy.random.rand(self.hiddenNodes, self.inputNodes)
-        self.w_hidden_output = numpy.random.rand(self.outputNodes, self.hiddenNodes)
+        self.w_input_hidden = (numpy.random.rand(self.hiddenNodes, self.inputNodes) - 0.5)
+        self.w_hidden_output = (numpy.random.rand(self.outputNodes, self.hiddenNodes) - 0.5)
 
         pass
 
