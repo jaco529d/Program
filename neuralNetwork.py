@@ -1,3 +1,5 @@
+import numpy
+
 class neuralNetwork:
 
     #initialise network
@@ -9,6 +11,11 @@ class neuralNetwork:
 
         #set learning rate 
         self.learningRate = learningRate
+
+        #weights
+        self.w_input_hidden = numpy.random.rand(self.hiddenNodes, self.inputNodes)
+        self.w_hidden_output = numpy.random.rand(self.outputNodes, self.hiddenNodes)
+
         pass
 
     #train function
@@ -18,3 +25,6 @@ class neuralNetwork:
     #query/answer
     def query(self):
         pass
+
+    def debug(self):
+        print("input->hidden:\n", self.w_input_hidden)
