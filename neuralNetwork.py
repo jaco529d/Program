@@ -26,7 +26,37 @@ class neuralNetwork:
 #            return scipy.special.expit(x)
 
     #train function
-    def train(self):
+    def train(self, inputsList, targetsList):
+        #--Calculate the output (just as query)--#
+
+        #converts input to 2D array
+        inputs = numpy.array(inputsList, ndmin=2).T
+
+        #calculate hidden layer
+        hiddenInputs = numpy.dot(self.w_input_hidden, inputs)
+        hiddenOutputs = self.activationFunction(hiddenInputs)
+
+        #calculate output layer
+        finalInputs = numpy.dot(self.w_hidden_output, hiddenOutputs)
+        finalOutputs = self.activationFunction(finalInputs)
+
+        #--Training on the output--#
+        
+        #converts to 2D array
+        targets = numpy.array(targetsList, ndmin=2).T
+
+        #calculate output error
+        outputErrors = targets - finalOutputs
+
+        #hidden layer error
+        hiddenErrors = numpy.dot(self.w_hidden_output.T, outputErrors)
+
+        #update the weights (first input to hidden weights, then hidden to output weights)
+        self.w_input_hidden  += self.learningRate * numpy.dot((hiddenErrors * hiddenOutputs * (1.0 - hiddenOutputs)), 
+                                                              numpy.transpose(hiddenOutputs))
+        self.w_hidden_output += self.learningRate * numpy.dot((outputErrors * finalOutputs * (1.0 - finalOutputs)), 
+                                                              numpy.transpose(inputs))
+        
         pass
 
     #query/answer
