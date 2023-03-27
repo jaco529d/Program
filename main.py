@@ -8,4 +8,6 @@ learningRate = 0.3
 
 n = neuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
 
-n.debug()
+a = n.query([1.0, 0.5, -1.5])
+print(a)
+#n.debug()
