@@ -1,4 +1,5 @@
 from neuralNetwork import *
+from pic2list import *
 
 #parameters:
 inputNodes = 3
