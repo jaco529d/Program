@@ -1,3 +1,6 @@
 Er nået til side 148 i pdf "Querying the Network"
 
 Sprang normal-distributionen over...
+
+
+Gem netværk som en pickle (brug pickle biblioteket)
