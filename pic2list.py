@@ -38,5 +38,5 @@ def resize_image(image_path):
         return pixelValues
 
 # Example usage:
-a = resize_image('C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/training_set/cats/cat.1.jpg')
-print('DONE', a)
+#a = resize_image('C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/training_set/cats/cat.1.jpg')
+#print('DONE', a)
