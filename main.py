@@ -3,6 +3,20 @@ from pic2list import *
 import dill
 import random
 
+def resize_img_forloop(length, img_path, image_list, answer_list, answer, x):
+    for i in range(length):
+        img_path_img = img_path + f".{i+x}.jpg"
+        pixels = resize_image(img_path_img)
+
+        image_list.append(pixels)
+        answer_list.append(answer)
+
+        print(i)
+
+    return image_list, answer_list
+
+#Dog = 0, Cat = 1
+
 #parameters:
 inputNodes = 1024
 hiddenNodes = 1024
@@ -20,25 +34,11 @@ if pickle_answer == "y":
         trainList = []
         trainAnswerList = []
 
-        for i in range(4000):
-            i += 1
+        img_path_0 = "C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/training_set/cats/cat"
+        trainList, trainAnswerList = resize_img_forloop(4000, img_path_0, trainList, trainAnswerList, 1, 1)
 
-            img_path = f"C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/training_set/cats/cat.{i}.jpg"
-            pixels = resize_image(img_path)
-            
-            trainList.append(pixels)
-            trainAnswerList.append(1)
-            print(i)
-
-        for i in range(4000):
-            i += 1
-
-            img_path = f"C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/training_set/dogs/dog.{i}.jpg"
-            pixels = resize_image(img_path)
-            
-            trainList.append(pixels)
-            trainAnswerList.append(0)
-            print(i)
+        img_path_1 = f"C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/training_set/dogs/dog"
+        trainList, trainAnswerList = resize_img_forloop(4000, img_path_1, trainList, trainAnswerList, 0, 1)
         
         with open("train_img.pickle", "wb") as f:
             dill.dump(trainList, f)
@@ -85,25 +85,11 @@ if pickle_test_answer == "y":
     testList = []
     testAnswerList = []
 
-    for i in range(1000):
-        i += 1
+    img_path_2 = "C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/test_set/cats/cat"
+    testList, testAnswerList = resize_img_forloop(1000, img_path_2, testList, testAnswerList, 1, 4001)
 
-        img_path = f"C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/test_set/cats/cat.{i+4000}.jpg"
-        pixels = resize_image(img_path)
-
-        testList.append(pixels)
-        testAnswerList.append(1)
-        print(f'r:{i}')
-
-    for i in range(1000):
-        i += 1
-
-        img_path = f"C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/test_set/dogs/dog.{i+4000}.jpg"
-        pixels = resize_image(img_path)
-
-        testList.append(pixels)
-        testAnswerList.append(0)
-        print(f'r:{i}')
+    img_path_3 = "C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/test_set/dogs/dog"
+    testList, testAnswerList = resize_img_forloop(1000, img_path_3, testList, testAnswerList, 0, 4001)
     
     with open("test_img.pickle", "wb") as f:
             dill.dump(testList, f)
@@ -118,14 +104,14 @@ else:
             testAnswerList = dill.load(f)
 
 for i in range(len(testList)):
-    aa = n.query(testList[i])
-    assumed_answer = int(aa)
+    assumed_answer = int(n.query(testList[i]))
     correct_answer = testAnswerList[i]
 
     if assumed_answer == correct_answer:
         correct_answers += 1
     else:
         wrong_answers += 1
+        print(correct_answer)
     
     print(f't:{i}')
 
