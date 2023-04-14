@@ -1,4 +1,5 @@
 from PIL import Image
+import numpy
 
 def resize_image(image_path):
     # Open the image file
@@ -35,7 +36,10 @@ def resize_image(image_path):
         #finds pixelvalues, and stores in list
         pixelValues = list(target_img.getdata())
 
-        return pixelValues
+        #calculate pixelvalues between 0.01 and 0.99
+        pixelValuesCal = (numpy.asfarray(pixelValues[1:]) / 255.0 * 0.99) + 0.01
+
+        return pixelValuesCal
 
 # Example usage:
 #a = resize_image('C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/training_set/cats/cat.1.jpg')
