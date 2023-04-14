@@ -23,10 +23,12 @@ hiddenNodes = 1024
 outputNodes = 1
 learningRate = 0.3
 
-n = neuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
+n = neuralNetworkBook(inputNodes, hiddenNodes, outputNodes, learningRate)
 
 pickle_answer = input("Do you want to train again? y/n")
 if pickle_answer == "y":
+
+    n.debug()
 
     pickle_resize_answer_test = input("resize images again? y/n")
     if pickle_resize_answer_test == "y":
@@ -73,8 +75,6 @@ elif pickle_answer == "n":
         n = dill.load(f)
     print("continue with pickeled, now testing")
 
-#catTest = n.query(resize_image('C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/test_set/cats/cat.4001.jpg'))
-#dogTest = n.query(resize_image('C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/test_set/dogs/dog.4001.jpg'))
 
 ##TEST##
 correct_answers = 0
@@ -115,17 +115,9 @@ for i in range(len(testList)):
     
     print(f't:{i}')
 
+n.debug()
+
 print(f'correct answers = {correct_answers}')
 print(f'wrong answers = {wrong_answers}')
 
-#print("cat: ", int(catTest))
-#print("dog: ", int(dogTest))
-
-
 input('press enter to close')
-
-#reshape til 32*32 billede (evt. biblioteket pillow) og tag pixelværdier og sæt i rækkefølge efter 
-#hinanden (numpy.reshape) således du får en streng adskilt af komma'er. Skal billedet croppes eller 
-#sætte black bars på?
-
-#n.debug()
