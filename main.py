@@ -18,12 +18,12 @@ def resize_img_forloop(length, img_path, image_list, answer_list, answer, x):
 #Dog = 0, Cat = 1
 
 #parameters:
-inputNodes = 1024
-hiddenNodes = 1024
+inputNodes = 1023
+hiddenNodes = 1023
 outputNodes = 1
 learningRate = 0.3
 
-n = neuralNetworkBook(inputNodes, hiddenNodes, outputNodes, learningRate)
+n = neuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
 
 pickle_answer = input("Do you want to train again? y/n")
 if pickle_answer == "y":
@@ -54,6 +54,9 @@ if pickle_answer == "y":
         with open("train_img_answer.pickle", "rb") as f:
             trainAnswerList = dill.load(f)
 
+    print(trainList[0])
+    print(trainAnswerList[0])
+
     for i in range(len(trainList)):
         k = random.randint(0 , (len(trainList) - 1))
         n.train(trainList[k], trainAnswerList[k])
@@ -78,6 +81,7 @@ elif pickle_answer == "n":
 
 ##TEST##
 correct_answers = 0
+unknown = 0
 wrong_answers = 0
 
 pickle_test_answer = input("resize image again? y/n")
@@ -104,20 +108,30 @@ else:
             testAnswerList = dill.load(f)
 
 for i in range(len(testList)):
-    assumed_answer = int(n.query(testList[i]))
+    assumed = n.query(testList[i])
+    if assumed > 0.6:
+         assumed_answer = 1
+    elif assumed < 0.4:
+         assumed_answer = 0
+    else:
+         assumed_answer = 'invalid'
     correct_answer = testAnswerList[i]
 
-    if assumed_answer == correct_answer:
+    if assumed_answer == 'invalid':
+         unknown += 1
+    elif assumed_answer == correct_answer:
         correct_answers += 1
     else:
         wrong_answers += 1
         print(correct_answer)
     
     print(f't:{i}')
+    print(assumed)
 
 n.debug()
 
 print(f'correct answers = {correct_answers}')
 print(f'wrong answers = {wrong_answers}')
+print(f'unknown answers = {unknown}')
 
 input('press enter to close')
