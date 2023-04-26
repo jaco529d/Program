@@ -9,7 +9,10 @@ def resize_img_forloop(length, img_path, image_list, answer_list, answer, x):
         pixels = resize_image(img_path_img)
 
         image_list.append(pixels)
-        answer_list.append(answer)
+        if answer == 1:
+             answer_list.append([1,0])
+        else:
+             answer_list.append([0,1])
 
         print(i)
 
@@ -19,11 +22,12 @@ def resize_img_forloop(length, img_path, image_list, answer_list, answer, x):
 
 #parameters:
 inputNodes = 1023
-hiddenNodes = 1023
-outputNodes = 1
+hidden1Nodes = 1023
+hidden2Nodes = 300
+outputNodes = 2
 learningRate = 0.3
 
-n = neuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
+n = neuralNetwork(inputNodes, hidden1Nodes, hidden2Nodes, outputNodes, learningRate)
 
 pickle_answer = input("Do you want to train again? y/n")
 if pickle_answer == "y":
@@ -109,24 +113,32 @@ else:
 
 for i in range(len(testList)):
     assumed = n.query(testList[i])
+    correct_answer = testAnswerList[i][0]
+    
+    if assumed[0] > assumed[1]:
+        assumed_answer = 1
+    elif assumed[0] < assumed[1]:
+        assumed_answer = 0
+    
+    '''
     if assumed > 0.6:
          assumed_answer = 1
     elif assumed < 0.4:
          assumed_answer = 0
     else:
          assumed_answer = 'invalid'
-    correct_answer = testAnswerList[i]
+    '''
 
     if assumed_answer == 'invalid':
          unknown += 1
     elif assumed_answer == correct_answer:
         correct_answers += 1
+        print(f'Ct:{i}, assumed:{assumed}, answer:{assumed_answer}, correct:{correct_answer}')
     else:
         wrong_answers += 1
-        print(correct_answer)
+        print(f'Wt:{i}, assumed:{assumed}, answer:{assumed_answer}, correct:{correct_answer}')
     
-    print(f't:{i}')
-    print(assumed)
+
 
 n.debug()
 
