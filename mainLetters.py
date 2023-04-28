@@ -22,7 +22,8 @@ def resize_img_forloop(length, img_path, image_list, answer_list, answer, x):
 
 #parameters:
 inputNodes = 784
-hiddenNodes = 200
+hiddenNodes = 784
+hidden2Nodes = 200
 outputNodes = 10
 learningRate = 0.1
 

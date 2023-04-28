@@ -14,8 +14,8 @@ class neuralNetwork:
         self.learningRate = learningRate
 
         #weights
-        self.w_input_hidden = (numpy.random.rand(self.hiddenNodes, self.inputNodes) - 0.5)
-        self.w_hidden_output = (numpy.random.rand(self.outputNodes, self.hiddenNodes) - 0.5)
+        self.w_input_hidden = numpy.random.normal(0.0, pow(self.inputNodes, -0.5), (self.hiddenNodes, self.inputNodes))
+        self.w_hidden_output = numpy.random.normal(0.0, pow(self.hiddenNodes, -0.5), (self.outputNodes, self.hiddenNodes))
 
         #function
         self.activationFunction = lambda x: scipy.special.expit(x)
