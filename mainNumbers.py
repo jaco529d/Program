@@ -36,7 +36,7 @@ if pickle_answer == "y":
     else:
          pass
 
-elif pickle_answer == "n":
+else:
     with open("neuralNetwork.pickle", "rb") as f:
         n = dill.load(f)
     print("continue with pickeled, now testing")
@@ -47,7 +47,7 @@ correct_answers = 0
 unknown = 0
 wrong_answers = 0
 
-allTestNumbers = createNumbersList(1000)
+allTestNumbers = createNumbersList(10000)
 print(len(allTestNumbers))
 
 for all_values in allTestNumbers:
