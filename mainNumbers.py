@@ -7,19 +7,20 @@ import random
 inputNodes = 784
 hiddenNodes = 300
 outputNodes = 10
-learningRate = 0.3
+learningRate = 0.1
 
 n = neuralNetwork(inputNodes, hiddenNodes, outputNodes, learningRate)
 
 pickle_answer = input("Do you want to train again? y/n")
 if pickle_answer == "y":
 
-    allTrainNumbers = createNumbersList(6000)
+    allTrainNumbers = createNumbersList(10000)
+    print(f'generated {len(allTrainNumbers)} numbers')
 
     for k in range(5):
         for all_values in allTrainNumbers:
             #print(type(all_values), all_values)
-            inputs = (numpy.asfarray(all_values[1:]))
+            inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
             # create the target output values (all 0.01, except the desired label which is 0.99)
             targets = numpy.zeros(outputNodes) + 0.01
             # all_values[0] is the target label for this record
@@ -48,11 +49,11 @@ unknown = 0
 wrong_answers = 0
 
 allTestNumbers = createNumbersList(10000)
-print(len(allTestNumbers))
+print(f'generated {len(allTestNumbers)} numbers')
 
 for all_values in allTestNumbers:
     correct_label = int(all_values[0])
-    inputs = (numpy.asfarray(all_values[1:]))
+    inputs = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
     # create the target output values (all 0.01, except the desired label which is 0.99)
     outputs = n.query(inputs)
     label = numpy.argmax(outputs)

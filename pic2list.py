@@ -49,21 +49,37 @@ def createNumbersList(amount):
     for i in range(amount):
         number = random.randint(0,9)
         
-        img = Image.new("1", (size, size), color=1)
+        img = Image.new("L", (size, size), color=255)
         draw = ImageDraw.Draw(img)
 
         font_size = size
         font = ImageFont.truetype("arial.ttf", font_size)
         draw.text((0,0), str(number), fill=0, font=font)
 
+        # Add random noise to the image
+        noise_level = 1.8  # Adjust the noise level as desired (1.5 is good)
+        pixels = img.load()
+        for i in range(size):
+            for j in range(size):
+                value = pixels[i, j]
+                # Add noise to the pixel value
+                noise = random.randint(-int(255 * noise_level), int(255 * noise_level))
+                value += noise
+                # Clamp the value to the valid range of 0-255
+                value = max(0, min(value, 255))
+                # Set the pixel value
+                pixels[i, j] = value
+
         pixelValues = [number]
         pixelValues += (list(img.getdata()))
+
+        #img.save(f"random{number}Noise{noise_level}.png")
 
         pixelValuesFull.append(pixelValues)
 
     return pixelValuesFull
 
-#print(createNumbersList(1))
+createNumbersList(1)
 
 # Example usage:
 #a = resize_image('C:/Users/jacob/OneDrive - Syddansk Erhvervsskole/Programering/Eksamensprojekt/dataset/training_set/cats/cat.1.jpg')
